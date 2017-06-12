@@ -11,7 +11,18 @@ class LongestCommonSubstringTests: XCTestCase {
         XCTAssertTrue(s2 < s1)        
     }
     
-    
+    func testSuffixArray() {
+        let s = SuffixArray(from: "banana")
+        
+        var previousSuffix = s.getSuffix(0)
+        var suffixArrayIsSorted = true
+        
+        for i in 1..<s.length {
+            suffixArrayIsSorted = suffixArrayIsSorted && previousSuffix < s.getSuffix(i)
+            previousSuffix = s.getSuffix(i)
+        }
+        XCTAssertTrue(suffixArrayIsSorted)
+    }
 
     static var allTests: [(String, (LongestCommonSubstringTests) -> () -> Void)] = [
         ("testSuffix", testSuffix),
