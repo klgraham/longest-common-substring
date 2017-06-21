@@ -4,7 +4,7 @@ import Foundation
  Longest common prefix (LCP) of the two strings being compared and the index
  at which the LCP starts in the right string.
  */
-fileprivate struct LongestCommonPrefix {
+public struct LongestCommonPrefix {
     // longest common prefix (LCP)
     let text: String
     
@@ -12,7 +12,7 @@ fileprivate struct LongestCommonPrefix {
     let rightStart: Int
 }
 
-struct LongestCommonSubstring {
+public struct LongestCommonSubstring {
     // Longest common substring (LCS)
     public let text: String
     
@@ -23,7 +23,8 @@ struct LongestCommonSubstring {
     public let rightStart: Int
 }
 
-fileprivate func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCommonPrefix {
+// Finds the longest common prefix of two suffixes.
+public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCommonPrefix {
     let shortestSuffixLength = min(s1.length, s2.length)
     
     /*
@@ -34,8 +35,8 @@ fileprivate func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> Longe
     for i in 0..<shortestSuffixLength {
         if s1.char(at: i) != s2.char(at: i) {
             let text = s1.text
-            let substringStart = text.index(text.endIndex, offsetBy: i - text.count)
-            return LongestCommonPrefix(text: text.substring(from: substringStart), rightStart: i)
+            let substringEnd = text.index(text.startIndex, offsetBy: i)
+            return LongestCommonPrefix(text: text.substring(to: substringEnd), rightStart: i)
         }
     }
     
@@ -44,6 +45,6 @@ fileprivate func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> Longe
      is the overlap of s1 and s2, up to the position specified by minLength
      */
     let text = s1.text
-    let substringStart = text.index(text.endIndex, offsetBy: shortestSuffixLength - text.count)
-    return LongestCommonPrefix(text: text.substring(from: substringStart), rightStart: shortestSuffixLength)
+    let substringEnd = text.index(text.startIndex, offsetBy: shortestSuffixLength)
+    return LongestCommonPrefix(text: text.substring(to: substringEnd), rightStart: shortestSuffixLength)
 }

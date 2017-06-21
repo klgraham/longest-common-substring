@@ -23,6 +23,18 @@ class LongestCommonSubstringTests: XCTestCase {
         }
         XCTAssertTrue(suffixArrayIsSorted)
     }
+    
+    func testLongestCommonPrefix() {
+        let suffix1 = Suffix(of: "encyclopedia", from: 1)
+        print("Suffix 1: \(suffix1)")
+        let suffix2 = Suffix(of: "encyclical", from: 1)
+        print("Suffix 2: \(suffix2)")
+        
+        
+        let lcp = findLongestCommonPrefix(of: suffix1, and: suffix2)
+        print(lcp)
+        XCTAssertEqual(lcp.text, "ncycl")
+    }
 
     static var allTests: [(String, (LongestCommonSubstringTests) -> () -> Void)] = [
         ("testSuffix", testSuffix),

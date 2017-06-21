@@ -5,8 +5,8 @@ import Foundation
 public struct Suffix {
     public let text: String
     
-    public init(of text: String, from index: Int) {
-        let suffixStart = text.index(text.endIndex, offsetBy: index - text.count)
+    public init(of text: String, from i: Int) {
+        let suffixStart = text.index(text.startIndex, offsetBy: i)
         self.text = text.substring(from: suffixStart)
     }
     
@@ -59,8 +59,4 @@ public struct SuffixArray {
     }
 }
 
-let s = SuffixArray(from: "abcde")
 
-for i in 0..<s.length {
-    print(s.getSuffix(i))
-}
