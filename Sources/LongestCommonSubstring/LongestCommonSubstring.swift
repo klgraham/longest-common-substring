@@ -49,7 +49,43 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
     return LongestCommonPrefix(text: text.substring(to: substringEnd), end: shortestSuffixLength)
 }
 
-//public func findLongestCommonSubstring(of s1: String, and s2: String) -> LongestCommonSubstring {
-//
-//}
+public func findLongestCommonSubstring(of left: String, and right: String) -> LongestCommonSubstring {
+    let leftLength = left.count
+    let rightLength = right.count
+    let leftSuffixes = SuffixArray(from: left)
+    let rightSuffixes = SuffixArray(from: right)
+    
+    var lcs = ""
+    var j = 0
+    var k = 0
+    var leftSuffix: Suffix
+    var rightSuffix: Suffix
+    var leftStart = 0
+    var rightStart = 0
+    
+    while j < leftLength && k < rightLength {
+        leftSuffix = leftSuffixes.getSuffix(j)
+        rightSuffix = rightSuffixes.getSuffix(k)
+        
+        let lcp = findLongestCommonPrefix(of: leftSuffix, and: rightSuffix)
+        
+        /*
+         If the LCP of the suffixes is longer than the LCS that has been found
+         so far, then we've found a longer substring. In this case, we update
+         the LCS.
+         */
+        if lcp.text.count > lcs.count {
+            lcs = lcp.text
+            leftStart = leftSuffix.start
+            rightStart = rightSuffix.start
+        }
+        
+        if leftSuffix.isBefore(rightSuffix) {
+            j += 1
+        } else {
+            k += 1
+        }
+    }
+    return LongestCommonSubstring(text: lcs, leftStart: leftStart, rightStart: rightStart)
+}
 
