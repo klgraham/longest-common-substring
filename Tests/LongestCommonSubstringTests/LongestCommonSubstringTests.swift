@@ -40,6 +40,12 @@ class LongestCommonSubstringTests: XCTestCase {
         XCTAssertEqual(lcs.leftStart, 4)
         XCTAssertEqual(lcs.rightStart, 0)
     }
+    
+    func testDPLongestCommonSubstring() {
+        let lcs = findLongestCommonSubstringDP(of: "i'm henry the eighth i am",
+                                             and: "henry the eighth i am i am")
+        XCTAssertEqual(lcs, "henry the eighth i am")
+    }
 
     static var allTests: [(String, (LongestCommonSubstringTests) -> () -> Void)] = [
         ("testSuffix", testSuffix),
