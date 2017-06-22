@@ -34,6 +34,7 @@ class LongestCommonSubstringTests: XCTestCase {
         let lcp = findLongestCommonPrefix(of: suffix1, and: suffix2)
         print(lcp)
         XCTAssertEqual(lcp.text, "ncycl")
+        XCTAssertEqual(lcp.end, 5)
     }
 
     static var allTests: [(String, (LongestCommonSubstringTests) -> () -> Void)] = [

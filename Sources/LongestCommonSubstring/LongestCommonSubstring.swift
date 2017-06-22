@@ -2,14 +2,14 @@ import Foundation
 
 /*
  Longest common prefix (LCP) of the two strings being compared and the index
- at which the LCP starts in the right string.
+ at which the LCP ends in both strings.
  */
 public struct LongestCommonPrefix {
     // longest common prefix (LCP)
     let text: String
     
-    // Starting index of the LCP in the right string
-    let rightStart: Int
+    // Ending index of the LCP
+    let end: Int
 }
 
 public struct LongestCommonSubstring {
@@ -36,7 +36,7 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
         if s1.char(at: i) != s2.char(at: i) {
             let text = s1.text
             let substringEnd = text.index(text.startIndex, offsetBy: i)
-            return LongestCommonPrefix(text: text.substring(to: substringEnd), rightStart: i)
+            return LongestCommonPrefix(text: text.substring(to: substringEnd), end: i)
         }
     }
     
@@ -46,5 +46,10 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
      */
     let text = s1.text
     let substringEnd = text.index(text.startIndex, offsetBy: shortestSuffixLength)
-    return LongestCommonPrefix(text: text.substring(to: substringEnd), rightStart: shortestSuffixLength)
+    return LongestCommonPrefix(text: text.substring(to: substringEnd), end: shortestSuffixLength)
 }
+
+//public func findLongestCommonSubstring(of s1: String, and s2: String) -> LongestCommonSubstring {
+//
+//}
+
