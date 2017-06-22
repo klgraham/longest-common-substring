@@ -9,10 +9,12 @@ import Foundation
  */
 public struct Suffix {
     public let text: String
+    public let start: Int
     
     public init(of text: String, from i: Int) {
         let suffixStart = text.index(text.startIndex, offsetBy: i)
         self.text = text.substring(from: suffixStart)
+        self.start = i
     }
     
     public var length: Int {
@@ -29,6 +31,10 @@ public struct Suffix {
 extension Suffix: Comparable, CustomStringConvertible {
     public static func < (lhs: Suffix, rhs: Suffix) -> Bool {
         return lhs.text < rhs.text
+    }
+    
+    public func isBefore(_ s: Suffix) -> Bool {
+        return self < s
     }
     
     public var description: String {
