@@ -24,7 +24,7 @@ public struct SuffixArray {
         return suffixes.count
     }
     
-    // Returns the ith smallest suffix
+    // Returns the ith smallest suffix, since the suffixes are ordered
     public func getSuffix(_ i: Int) -> Suffix {
         return suffixes[i]!
     }
