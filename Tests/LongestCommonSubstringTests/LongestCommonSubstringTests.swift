@@ -34,15 +34,26 @@ class LongestCommonSubstringTests: XCTestCase {
     }
     
     func testLongestCommonSubstring() {
-        let lcs = findLongestCommonSubstring(of: "i'm henry the eighth i am",
+        let lcs = longestCommonSubstring(of: "i'm henry the eighth i am",
                                              and: "henry the eighth i am i am")
         XCTAssertEqual(lcs.text, "henry the eighth i am")
         XCTAssertEqual(lcs.leftStart, 4)
         XCTAssertEqual(lcs.rightStart, 0)
     }
     
+    func testLCSWithEmoji() {
+        let s1 = "😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 😞 😟 😤 😢"
+
+        let s2 = "idyfhadhlfd a;dfhawd👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤ldfdsfdsfsad"
+
+        let expected = "👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤"
+        
+        let lcs = longestCommonSubstring(of: s1, and: s2)
+        XCTAssertEqual(lcs.text, expected)
+    }
+    
     func testDPLongestCommonSubstring() {
-        let lcs = findLongestCommonSubstringDP(of: "i'm henry the eighth i am",
+        let lcs = longestCommonSubstringDP(of: "i'm henry the eighth i am",
                                              and: "henry the eighth i am i am")
         XCTAssertEqual(lcs, "henry the eighth i am")
     }

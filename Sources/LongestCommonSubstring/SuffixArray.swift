@@ -9,12 +9,12 @@
 public struct SuffixArray {
     private var suffixes: [Suffix?]
     
-    public init(from parent: String) {
-        let n = parent.count
+    public init(from text: String) {
+        let n = text.count
         suffixes = [Suffix?](repeating: nil, count: n)
         
         for i in 0..<n {
-            suffixes[i] = Suffix(of: parent, from: i)
+            suffixes[i] = Suffix(of: text, from: i)
         }
         
         suffixes.sort(by: {$0! < $1!})

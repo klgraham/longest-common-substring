@@ -1,6 +1,4 @@
-//: Playground - noun: a place where people can play
 
-import Foundation
 
 // Mark: Suffix
 /*
@@ -11,12 +9,12 @@ import Foundation
  Reference: https://en.wikipedia.org/wiki/Substring#Suffix
  */
 public struct Suffix {
-    public let text: String
+    public let text: Substring
     public let start: Int
     
     public init(of text: String, from i: Int) {
         let suffixStart = text.index(text.startIndex, offsetBy: i)
-        self.text = text.substring(from: suffixStart)
+        self.text = text[suffixStart..<text.endIndex]
         self.start = i
     }
     
@@ -24,7 +22,7 @@ public struct Suffix {
         return text.count
     }
     
-    // Return the char at the specified index
+    // Return the character at the specified index
     public func char(at i: Int) -> Character {
         let charIndex = text.index(text.startIndex, offsetBy: i)
         return text[charIndex]
@@ -41,7 +39,7 @@ extension Suffix: Comparable, CustomStringConvertible {
     }
     
     public var description: String {
-        return text
+        return String(text)
     }
     
     public static func ==(lhs: Suffix, rhs: Suffix) -> Bool {
@@ -61,12 +59,12 @@ extension Suffix: Comparable, CustomStringConvertible {
 public struct SuffixArray {
     private var suffixes: [Suffix?]
     
-    public init(from parent: String) {
-        let n = parent.count
+    public init(from text: String) {
+        let n = text.count
         suffixes = [Suffix?](repeating: nil, count: n)
         
         for i in 0..<n {
-            suffixes[i] = Suffix(of: parent, from: i)
+            suffixes[i] = Suffix(of: text, from: i)
         }
         
         suffixes.sort(by: {$0! < $1!})
@@ -94,6 +92,11 @@ public struct LongestCommonPrefix {
     
     // Ending index of the LCP
     let end: Int
+    
+    init(of text: String, to end: Int) {
+        self.text = text
+        self.end = end
+    }
 }
 
 public struct LongestCommonSubstring {
@@ -120,7 +123,8 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
         if s1.char(at: i) != s2.char(at: i) {
             let text = s1.text
             let substringEnd = text.index(text.startIndex, offsetBy: i)
-            return LongestCommonPrefix(text: text.substring(to: substringEnd), end: i)
+            let substring = String(text[text.startIndex..<substringEnd])
+            return LongestCommonPrefix(of: substring, to: i)
         }
     }
     
@@ -130,10 +134,11 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
      */
     let text = s1.text
     let substringEnd = text.index(text.startIndex, offsetBy: shortestSuffixLength)
-    return LongestCommonPrefix(text: text.substring(to: substringEnd), end: shortestSuffixLength)
+    let substring = String(text[text.startIndex..<substringEnd])
+    return LongestCommonPrefix(of: substring, to: shortestSuffixLength)
 }
 
-public func findLongestCommonSubstring(of left: String, and right: String) -> LongestCommonSubstring {
+public func longestCommonSubstring(of left: String, and right: String) -> LongestCommonSubstring {
     let leftLength = left.count
     let rightLength = right.count
     let leftSuffixes = SuffixArray(from: left)
@@ -176,7 +181,7 @@ public func findLongestCommonSubstring(of left: String, and right: String) -> Lo
 // Mark: Dynamic Programming implementation of Longest Common Substring algorithm
 
 // A Swift port of: https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring#Python
-public func findLongestCommonSubstringDP(of left: String, and right: String) -> String {
+public func longestCommonSubstringDP(of left: String, and right: String) -> String {
     let leftLength = left.count
     let rightLength = right.count
     
@@ -208,4 +213,19 @@ public func findLongestCommonSubstringDP(of left: String, and right: String) -> 
     //    return LongestCommonSubstring(text: lcsText, leftStart: lcsLeftEnd - lcsLength, )
 }
 
+let s1 = "😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 😞 😟 😤 😢"
 
+let s2 = "idyfhadhlfd a;dfhawd👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤ldfdsfdsfsad"
+
+let expected = "👨‍👩‍👧‍👦 🥰 😗 😙 😚 ☺️ 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤"
+
+let lcs = longestCommonSubstring(of: s1, and: s2)
+
+lcs.text == expected
+
+print(expected)
+print(lcs.text)
+
+let lcs_dp = longestCommonSubstringDP(of: s1, and: s2)
+
+lcs_dp == expected

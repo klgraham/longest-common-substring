@@ -1,5 +1,3 @@
-import Foundation
-
 // Mark: Suffix-Array implementation of Longest Common Substring algorithm
 
 /*
@@ -12,6 +10,11 @@ public struct LongestCommonPrefix {
     
     // Ending index of the LCP
     let end: Int
+    
+    init(of text: String, to end: Int) {
+        self.text = text
+        self.end = end
+    }
 }
 
 public struct LongestCommonSubstring {
@@ -38,7 +41,8 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
         if s1.char(at: i) != s2.char(at: i) {
             let text = s1.text
             let substringEnd = text.index(text.startIndex, offsetBy: i)
-            return LongestCommonPrefix(text: text.substring(to: substringEnd), end: i)
+            let substring = String(text[text.startIndex..<substringEnd])
+            return LongestCommonPrefix(of: substring, to: i)
         }
     }
     
@@ -48,10 +52,11 @@ public func findLongestCommonPrefix(of s1: Suffix, and s2: Suffix) -> LongestCom
      */
     let text = s1.text
     let substringEnd = text.index(text.startIndex, offsetBy: shortestSuffixLength)
-    return LongestCommonPrefix(text: text.substring(to: substringEnd), end: shortestSuffixLength)
+    let substring = String(text[text.startIndex..<substringEnd])
+    return LongestCommonPrefix(of: substring, to: shortestSuffixLength)
 }
 
-public func findLongestCommonSubstring(of left: String, and right: String) -> LongestCommonSubstring {
+public func longestCommonSubstring(of left: String, and right: String) -> LongestCommonSubstring {
     let leftLength = left.count
     let rightLength = right.count
     let leftSuffixes = SuffixArray(from: left)
@@ -96,7 +101,7 @@ public func findLongestCommonSubstring(of left: String, and right: String) -> Lo
 
 
 // A Swift port of: https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring#Python
-public func findLongestCommonSubstringDP(of left: String, and right: String) -> String {
+public func longestCommonSubstringDP(of left: String, and right: String) -> String {
     let leftLength = left.count
     let rightLength = right.count
     
@@ -125,6 +130,5 @@ public func findLongestCommonSubstringDP(of left: String, and right: String) -> 
     let lcsLeftStartIndex = left.index(left.startIndex, offsetBy: lcsLeftEnd - lcsLength)
     let lcsLeftEndIndex = left.index(left.startIndex, offsetBy: lcsLeftEnd)
     return String(left[lcsLeftStartIndex..<lcsLeftEndIndex])
-//    return LongestCommonSubstring(text: lcsText, leftStart: lcsLeftEnd - lcsLength, )
 }
 
